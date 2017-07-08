@@ -20,14 +20,23 @@ import java.io.IOException;
 public class WordCountMapReduce {
     /**
      * Mapper class : public class Mapper<KEYIN, VALUEIN, KEYOUT, VALUEOUT>
-     *
      */
-    public static class WordCountMapper extends
-            Mapper<LongWritable, Text, Text, IntWritable> {
+    public static class WordCountMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 
         private Text mapOutputKey = new Text();
         private final IntWritable mapOutputValue = new IntWritable(1);
 
+        /**
+         * Mapper方法是提供给map-task进程调用的，map-task进程每读取一行文本就调用一次我们自定义的mapper方法
+         * 传递的参数说明:
+         * @param key
+         * 一行的起始偏移量
+         * @param value
+         * 一行文本的内容
+         * @param context
+         * @throws IOException
+         * @throws InterruptedException
+         */
         @Override
         protected void map(LongWritable key, Text value, Context context)
                 throws IOException, InterruptedException {
@@ -49,14 +58,22 @@ public class WordCountMapReduce {
      * Reducer class
      *
      */
-    public static class WordCountReducer extends
-            Reducer<Text, IntWritable, Text, IntWritable> {
+    public static class WordCountReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
 
         private IntWritable outputValue = new IntWritable();
 
+        /**
+         * reduce方法是提供给reduce-task进程调用的
+         * reduce-task会将shuffle阶段过来的大量的k-v数据进行聚合，聚合的机制是将key相同的k-v数据聚合为一组，然后reduce-task对每一组聚合k-v调用一次我们的reduce程序
+         *
+         * @param key
+         * @param values
+         * @param context
+         * @throws IOException
+         * @throws InterruptedException
+         */
         @Override
-        protected void reduce(Text key, Iterable<IntWritable> values,
-                              Context context) throws IOException, InterruptedException {
+        protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
             // temp : sum
             int sum = 0;
 
@@ -82,7 +99,13 @@ public class WordCountMapReduce {
 
         // 2.create job
         Job job = Job.getInstance(conf, this.getClass().getSimpleName());
+        /**
+         * 指定本job所在的jar包
+         * 分发时会将该jar分发到集群
+         */
         job.setJarByClass(this.getClass());
+
+
 
         // 3.set job
         // Input --> map --> reduce --> output
