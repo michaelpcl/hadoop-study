@@ -96,6 +96,14 @@ public class WordCountMapReduce {
     public int run(String[] args) throws Exception {
         // 1.Get Configuration
         Configuration conf = new Configuration();
+        /**
+         * 设置运行模式
+         * 本地运行
+         * 集群运行模式
+         * 设置了如下的两个参数，就是设置集群运行模式，否则就是本地模式
+         */
+        //conf.set("mapreduce.framework.name","yarn");
+        //conf.set("yarn.resourcemanager.hostname","host主机");
 
         // 2.create job
         Job job = Job.getInstance(conf, this.getClass().getSimpleName());
@@ -148,8 +156,20 @@ public class WordCountMapReduce {
 
     public static void main(String[] args) throws Exception {
 
-        //地址是：hdfs://主机名:8020/input
-        args = new String[] { "hdfs://ns1/user/dp326007/input.txt", "hdfs://ns1/user/dp326007/output11" };
+        /**
+         * 地址是：hdfs://主机名:8020/input
+         * 这样的模式也是本地模式，只是会从hdfs上把数据弄到本地
+         * 区分本地和集群运行模式，主要看配置文件
+         */
+        //args = new String[] { "hdfs://ns1/user/dp326007/input.txt", "hdfs://ns1/user/dp326007/output11" };
+
+        /**
+         * 本地测试，将文件放置到本地
+         * 不能直接写路径
+         * 需要file:/// + 路径的形式
+         */
+        args = new String[] { "file:///d:/326007/Desktop/data/local_model/input/input.txt", "file:///d:/326007/Desktop/data/local_model/output" };
+
 
         System.setProperty("hadoop.home.dir", "D:\\bigdata-related\\hadoop_home_bin_conf\\hadoop-common-2.6.0-bin-master");
         System.setProperty("HADOOP_USER_NAME", "manager");
