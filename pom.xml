@@ -10,6 +10,7 @@
     <module>hadoop-server</module>
     <module>hadoop-hdfs</module>
     <module>hadoop-mapreduce</module>
+    <module>hadoop-zk</module>
   </modules>
   <packaging>pom</packaging>
 
