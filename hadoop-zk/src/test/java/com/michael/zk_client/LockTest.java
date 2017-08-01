@@ -1,11 +1,8 @@
 package com.michael.zk_client;
 
-import com.xj.zk.lock.Lock;
+import com.michael.zookeeper.zk_client.ZkClient;
+import com.michael.zookeeper.zk_client.lock.Lock;
 
-/**
- * Author: xiajun
- * Date: 2016/12/11 09:51
- */
 public class LockTest {
     public static void main(String[] args) throws InterruptedException {
         final ZkClient zk = new ZkClient("192.168.1.104:2181");

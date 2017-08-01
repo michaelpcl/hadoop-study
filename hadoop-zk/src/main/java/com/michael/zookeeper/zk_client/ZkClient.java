@@ -65,7 +65,7 @@ public class ZkClient {
         this.hosts = hosts;
         this.sessionTimeout = sessionTimeout;
         this.connTimeout = connTimeout;
-        watcher = new ZkWatcher(connLock, this);
+        //watcher = new ZkWatcher(connLock, this);
         this.process = new WatcherProcess(this, watcherThreadSize);
         this.connection();
     }
