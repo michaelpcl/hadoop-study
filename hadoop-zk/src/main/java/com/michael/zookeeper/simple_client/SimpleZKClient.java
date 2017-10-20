@@ -1,4 +1,4 @@
-package com.michael.zookeeper;
+package com.michael.zookeeper.simple_client;
 
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.WatchedEvent;
