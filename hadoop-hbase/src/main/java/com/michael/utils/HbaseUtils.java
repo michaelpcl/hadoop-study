@@ -13,7 +13,9 @@ public class HbaseUtils {
 
     static {
         configuration = HBaseConfiguration.create();
-        configuration = new Configuration();
+        configuration.set("hbase.zookeeper.property.clientPort", "2181");
+        configuration.set("hbase.zookeeper.quorum", "192.168.10.228,192.168.10.229,192.168.10.230,192.168.10.231,192.168.10.232");
+        configuration.set("hbase.master", "192.168.10.228:60000");
     }
 
     public static Connection generatorConnection(){
